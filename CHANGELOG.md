@@ -1,5 +1,11 @@
 This file lists all changes to the code
 
+v0.1.1
+------
+
+* MAINT: Try git before importlib
+* TST: Added simple test
+
 v0.1.0
 ------
 
