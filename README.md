@@ -21,7 +21,7 @@ dynamic = ['version']
 dependencies = ['DiscoverVersion']
 ```
 
-The add the following to you `__init__.py`:
+The add the following to your toplevel `__init__.py`:
 
 ```python3
 from DiscoverVersion import get_version
