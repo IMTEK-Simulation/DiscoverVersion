@@ -79,15 +79,11 @@ def get_version(package_name, use_git=True, use_importlib=True):
     version : str
         Version string.    
     """
-    # git works if we are in the source repository
     discovered_version = None
     tried = ''
-    if use_git:
-        try:
-            discovered_version = get_version_from_git()
-        except CannotDiscoverVersion:
-            tried += ', git'
-            discovered_version = None
+
+    # We need to start with importlib because otherwise all packages will
+    # have the version of the current git repository
 
     # importlib is present in Python >= 3.8
     if discovered_version is None and use_importlib:
@@ -100,6 +96,14 @@ def get_version(package_name, use_git=True, use_importlib=True):
             discovered_version = version(package_name)
         except ImportError:
             tried += ', importlib'
+            discovered_version = None
+
+    # git works if we are in the source repository
+    if discovered_version is None and use_git:
+        try:
+            discovered_version = get_version_from_git()
+        except CannotDiscoverVersion:
+            tried += ', git'
             discovered_version = None
 
     # Nope. Out of options.
