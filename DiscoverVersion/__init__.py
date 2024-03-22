@@ -23,3 +23,4 @@
 #
 
 from .version import __version__
+from .Discovery import get_version
