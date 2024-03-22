@@ -1,6 +1,6 @@
 This file lists all changes to the code
 
-v0.0.1
+v0.1.0
 ------
 
-* Initial release
+* Initial release; adjusted version discovery code from SurfaceTopography

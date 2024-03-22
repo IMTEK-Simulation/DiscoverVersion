@@ -1,6 +1,9 @@
-# Skeleton
+# DiscoverVersion
 
-Skeleton for numerical projects with Python. This skeleton uses [numpy](https://numpy.org/) and [pytest](https://pytest.org). Rename the `python_skeleton` subdirectory to your module name.
+This package automatically discover version information for a package. It
+first asks `importlib`, and if that fails tries to get the version from local
+`git` repository. It is intended as a lightweight replacement for
+`setuptools_scm`.
 
 ## Tests
 
