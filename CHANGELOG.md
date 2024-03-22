@@ -1,5 +1,10 @@
 This file lists all changes to the code
 
+v0.1.2
+------
+
+* MAINT: Allow discovery from submodule
+
 v0.1.1
 ------
 

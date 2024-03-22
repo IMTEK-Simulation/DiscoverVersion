@@ -29,7 +29,7 @@ Tests the hello world function
 from DiscoverVersion import __version__, get_version
 
 
-_current_version = '0.1.1'
+_current_version = '0.1.2'
 
 
 def test_version_discovery():
@@ -39,3 +39,6 @@ def test_version_discovery():
 def test_version_from_submodule():
     assert get_version('DiscoverVersion').startswith(_current_version)
     assert get_version('DiscoverVersion.some.module').startswith(_current_version)
+
+    assert get_version('DiscoverVersion', use_git=False).startswith(_current_version)
+    assert get_version('DiscoverVersion.some.module', use_git=False).startswith(_current_version)

@@ -61,28 +61,51 @@ def get_version_from_git():
     return version
 
 
-def get_version(package_name):
+def get_version(package_name, use_git=True, use_importlib=True):
+    """
+    Discover version of package `package_name`.
+
+    Parameters
+    ----------
+    package_name : str
+        Name of the package.
+    use_git : bool, optional
+        Try to discover version from git. (Default: true)
+    use_importlib : bool, optional
+        Try to discover version from importlib. (Default: true)
+
+    Returns
+    -------
+    version : str
+        Version string.    
+    """
     # git works if we are in the source repository
-    try:
-        discovered_version = get_version_from_git()
-    except CannotDiscoverVersion:
-        discovered_version = None
+    discovered_version = None
+    tried = ''
+    if use_git:
+        try:
+            discovered_version = get_version_from_git()
+        except CannotDiscoverVersion:
+            tried += ', git'
+            discovered_version = None
 
     # importlib is present in Python >= 3.8
-    if discovered_version is None:
+    if discovered_version is None and use_importlib:
+        # If package_name is a submodule, we need to strip the submodule part
+        s = package_name.split('.')
+        package_name = s[0]
         try:
             from importlib.metadata import version
 
             discovered_version = version(package_name)
         except ImportError:
+            tried += ', importlib'
             discovered_version = None
 
     # Nope. Out of options.
 
     if discovered_version is None:
-        raise CannotDiscoverVersion('Tried git and importlib')
-
-    print(discovered_version)
+        raise CannotDiscoverVersion(f'Tried: {tried[2:]}')
 
     return discovered_version
 
