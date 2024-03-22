@@ -1,6 +1,11 @@
 This file lists all changes to the code
 
-v0.2.0 (22Mar24)
+v0.2.1 (22Mar24)
+----------------
+
+* MAINT: Also detect version if not in toplevel git directory
+
+* v0.2.0 (22Mar24)
 ----------------
 
 * ENH: Pass file/directory name for git discovery

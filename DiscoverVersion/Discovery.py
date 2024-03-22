@@ -23,6 +23,7 @@
 #
 
 import os
+import shutil
 import subprocess
 
 _toplevel_package = __name__.split('.')[0]
@@ -37,12 +38,13 @@ def get_version_from_git(dirname):
     """
     Discover version from git repository.
     """
-    if not os.path.exists(f'{dirname}/.git'):
-        raise CannotDiscoverVersion('.git subdirectory does not exist.')
+    if shutil.which('git') is None:
+        raise CannotDiscoverVersion('git executable does not exist.')
 
     try:
         git_describe = subprocess.run(
-            ['git', 'describe', '--tags', '--dirty', '--always', dirname],
+            ['git', 'describe', '--tags', '--dirty', '--always'],
+            cwd=dirname,
             stdout=subprocess.PIPE)
     except FileNotFoundError:
         git_describe = None
@@ -112,28 +114,28 @@ def get_version(package_name, file_name, use_git=True, use_importlib=True, use_p
 
     # inspect PKG-INFO file (if it exists)
     if discovered_version is None and use_pkginfo:
+        tried += ', PKG-INFO'
         try:
             discovered_version = get_version_from_pkginfo()
         except CannotDiscoverVersion:
-            tried += ', PKG-INFO'
             discovered_version = None
 
     # git works if we are in the source repository
     if discovered_version is None and use_git:
+        tried += ', git'
         try:
             discovered_version = get_version_from_git(os.path.dirname(file_name))
         except CannotDiscoverVersion:
-            tried += ', git'
             discovered_version = None
 
     # importlib is present in Python >= 3.8
     if discovered_version is None and _toplevel_package not in _build_systems and use_importlib:
         try:
+            tried += ', importlib'
             from importlib.metadata import version
 
             discovered_version = version(package_name)
         except ImportError:
-            tried += ', importlib'
             discovered_version = None
 
     # Nope. Out of options.
