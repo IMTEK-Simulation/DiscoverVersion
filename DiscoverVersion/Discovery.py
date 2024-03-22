@@ -85,6 +85,8 @@ def get_version(package_name, use_git=True, use_importlib=True):
     discovered_version = None
     tried = ''
 
+    print('package_name:', package_name)
+
     # If package_name is a submodule, we need to strip the submodule part
     s = package_name.split('.')
     package_name = s[0]
@@ -96,6 +98,7 @@ def get_version(package_name, use_git=True, use_importlib=True):
     if discovered_version is None and use_git:
         try:
             discovered_version = get_version_from_git(package_name)
+            print('git:', discovered_version)
         except CannotDiscoverVersion:
             tried += ', git'
             discovered_version = None
@@ -106,6 +109,7 @@ def get_version(package_name, use_git=True, use_importlib=True):
             from importlib.metadata import version
 
             discovered_version = version(package_name)
+            print('importlib:', discovered_version)
         except ImportError:
             tried += ', importlib'
             discovered_version = None
