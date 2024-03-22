@@ -1,5 +1,10 @@
 This file lists all changes to the code
 
+v0.1.4
+------
+
+* BUG: Detect if we are inside flit build isolation
+
 v0.1.3
 ------
 
