@@ -26,8 +26,16 @@
 Tests the hello world function
 """
 
-from DiscoverVersion import __version__
+from DiscoverVersion import __version__, get_version
+
+
+_current_version = '0.1.1'
 
 
 def test_version_discovery():
-    assert __version__.startswith('0.1.1')
+    assert __version__.startswith(_current_version)
+
+
+def test_version_from_submodule():
+    assert get_version('DiscoverVersion').startswith(_current_version)
+    assert get_version('DiscoverVersion.some.module').startswith(_current_version)
