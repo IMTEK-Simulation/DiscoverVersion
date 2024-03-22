@@ -86,7 +86,6 @@ def get_version(package_name, use_git=True, use_importlib=True):
     tried = ''
 
     # If package_name is a submodule, we need to strip the submodule part
-    print(package_name)
     s = package_name.split('.')
     package_name = s[0]
 

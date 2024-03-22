@@ -26,8 +26,11 @@ The add the following to your toplevel `__init__.py`:
 ```python3
 from DiscoverVersion import get_version
 
-__version__ = get_version(__name__)
+__version__ = get_version('my_package_name')
 ```
+
+Note that it is important to hard code the name of your package in the call
+to `get_version`.
 
 ## Tests
 

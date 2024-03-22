@@ -1,5 +1,15 @@
 This file lists all changes to the code
 
+v0.1.6 (22Mar24)
+----------------
+
+* BUG: Hard-code package name
+
+v0.1.5 (22Mar24)
+----------------
+
+* MAINT: Debug print package name
+
 v0.1.4 (22Mar24)
 ----------------
 
