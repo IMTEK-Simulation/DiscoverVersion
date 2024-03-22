@@ -24,4 +24,4 @@
 
 from .Discovery import get_version
 
-__version__ = get_version('DiscoverVersion')
+__version__ = get_version(__name__.replace('version', ''))

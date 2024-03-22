@@ -1,5 +1,10 @@
 This file lists all changes to the code
 
+v0.1.7 (22Mar24)
+----------------
+
+* BUG: Use __name__ for package name
+
 v0.1.6 (22Mar24)
 ----------------
 
