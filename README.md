@@ -1,8 +1,8 @@
 # DiscoverVersion
 
 This package automatically discover version information for a package. It
-first asks `importlib`, and if that fails tries to get the version from local
-`git` repository. It is intended as a lightweight replacement for
+first asks `git`, and if that fails tries to get the version from package
+metadata throught `importlib`. It is intended as a lightweight replacement for
 `setuptools_scm`.
 
 ## Usage
