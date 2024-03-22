@@ -62,25 +62,27 @@ def get_version_from_git():
 
 
 def get_version(package_name):
-    # importlib is present in Python >= 3.8
+    # git works if we are in the source repository
     try:
-        from importlib.metadata import version
-
-        discovered_version = version(package_name)
-    except ImportError:
+        discovered_version = get_version_from_git()
+    except CannotDiscoverVersion:
         discovered_version = None
 
-    # git works if we are in the source repository
+    # importlib is present in Python >= 3.8
     if discovered_version is None:
         try:
-            discovered_version= get_version_from_git()
-        except CannotDiscoverVersion:
+            from importlib.metadata import version
+
+            discovered_version = version(package_name)
+        except ImportError:
             discovered_version = None
 
     # Nope. Out of options.
 
     if discovered_version is None:
-        raise CannotDiscoverVersion('Tried importlib and git')
+        raise CannotDiscoverVersion('Tried git and importlib')
+
+    print(discovered_version)
 
     return discovered_version
 
