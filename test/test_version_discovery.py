@@ -30,4 +30,4 @@ from DiscoverVersion import __version__
 
 
 def test_version_discovery():
-    assert __version__.startswith('0.1.0')
+    assert __version__.startswith('0.1.1')
