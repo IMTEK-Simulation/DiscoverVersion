@@ -30,6 +30,21 @@ class CannotDiscoverVersion(Exception):
     pass
 
 
+def get_version_from_pkginfo():
+    """
+    Discover version from PKG-INFO file.
+    """
+    if not os.path.exists('PKG-INFO'):
+        raise CannotDiscoverVersion('PKG-INFO file does not exist.')
+
+    with open('PKG-INFO', 'r') as f:
+        for line in f:
+            if line.startswith('Version: '):
+                return line.split()[1]
+
+    raise CannotDiscoverVersion('Version not found in PKG-INFO.')
+
+
 def get_version_from_git(package_name):
     """
     Discover version from git repository.
@@ -64,7 +79,7 @@ def get_version_from_git(package_name):
     return version
 
 
-def get_version(package_name, use_git=True, use_importlib=True):
+def get_version(package_name, use_git=True, use_importlib=True, use_pkginfo=True):
     """
     Discover version of package `package_name`.
 
@@ -76,6 +91,8 @@ def get_version(package_name, use_git=True, use_importlib=True):
         Try to discover version from git. (Default: true)
     use_importlib : bool, optional
         Try to discover version from importlib. (Default: true)
+    use_pkginfo : bool, optional
+        Try to discover version from PKG-INFO file. (Default: true)
 
     Returns
     -------
@@ -84,8 +101,6 @@ def get_version(package_name, use_git=True, use_importlib=True):
     """
     discovered_version = None
     tried = ''
-
-    print('package_name:', package_name)
 
     # If package_name is a submodule, we need to strip the submodule part
     s = package_name.split('.')
@@ -98,20 +113,26 @@ def get_version(package_name, use_git=True, use_importlib=True):
     if discovered_version is None and use_git:
         try:
             discovered_version = get_version_from_git(package_name)
-            print('git:', discovered_version)
         except CannotDiscoverVersion:
             tried += ', git'
             discovered_version = None
 
     # importlib is present in Python >= 3.8
-    if discovered_version is None and use_importlib:
+    if discovered_version is None and package_name != 'flit_core' and use_importlib:
         try:
             from importlib.metadata import version
 
             discovered_version = version(package_name)
-            print('importlib:', discovered_version)
         except ImportError:
             tried += ', importlib'
+            discovered_version = None
+
+    # pkg-info
+    if discovered_version is None and use_pkginfo:
+        try:
+            discovered_version = get_version_from_pkginfo()
+        except CannotDiscoverVersion:
+            tried += ', PKG-INFO'
             discovered_version = None
 
     # Nope. Out of options.
@@ -120,4 +141,3 @@ def get_version(package_name, use_git=True, use_importlib=True):
         raise CannotDiscoverVersion(f'Tried: {tried[2:]}')
 
     return discovered_version
-

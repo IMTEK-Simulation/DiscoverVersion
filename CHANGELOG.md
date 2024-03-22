@@ -1,6 +1,11 @@
 This file lists all changes to the code
 
-v0.1.7 (22Mar24)
+v0.1.8 (22Mar24)
+----------------
+
+* MAINT: Added discovery via PKG-INFO file
+
+* v0.1.7 (22Mar24)
 ----------------
 
 * BUG: Use __name__ for package name
