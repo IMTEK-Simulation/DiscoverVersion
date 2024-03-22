@@ -1,5 +1,10 @@
 This file lists all changes to the code
 
+v0.2.0 (22Mar24)
+----------------
+
+* ENH: Pass file/directory name for git discovery
+
 v0.1.9 (22Mar24)
 ----------------
 
