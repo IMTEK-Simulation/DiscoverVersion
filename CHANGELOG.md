@@ -1,6 +1,11 @@
 This file lists all changes to the code
 
-v0.1.8 (22Mar24)
+v0.1.9 (22Mar24)
+----------------
+
+* MAINT: Changed discovery order
+
+* v0.1.8 (22Mar24)
 ----------------
 
 * MAINT: Added discovery via PKG-INFO file

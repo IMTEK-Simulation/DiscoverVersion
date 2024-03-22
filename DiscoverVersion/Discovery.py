@@ -25,35 +25,20 @@
 import os
 import subprocess
 
+_toplevel_package = __name__.split('.')[0]
+_build_systems = ['flit_core']
+
 
 class CannotDiscoverVersion(Exception):
     pass
 
 
-def get_version_from_pkginfo():
-    """
-    Discover version from PKG-INFO file.
-    """
-    if not os.path.exists('PKG-INFO'):
-        raise CannotDiscoverVersion('PKG-INFO file does not exist.')
-
-    with open('PKG-INFO', 'r') as f:
-        for line in f:
-            if line.startswith('Version: '):
-                return line.split()[1]
-
-    raise CannotDiscoverVersion('Version not found in PKG-INFO.')
-
-
-def get_version_from_git(package_name):
+def get_version_from_git():
     """
     Discover version from git repository.
     """
     if not os.path.exists('.git'):
         raise CannotDiscoverVersion('.git subdirectory does not exist.')
-
-    if package_name != 'flit_core' and not os.path.exists(package_name):
-        raise CannotDiscoverVersion(f"Wrong git repository: Subdirectory '{package_name}' does not exist.")
 
     try:
         git_describe = subprocess.run(
@@ -74,9 +59,27 @@ def get_version_from_git(package_name):
     version = version.replace('-', '.dev', 1)
     version = version.replace('-', '+', 1)
     if dirty:
-        version += '.dirty'
+        if '+' in version:
+            version += '.dirty'
+        else:
+            version += '+dirty'
 
     return version
+
+
+def get_version_from_pkginfo():
+    """
+    Discover version from PKG-INFO file.
+    """
+    if not os.path.exists('PKG-INFO'):
+        raise CannotDiscoverVersion('PKG-INFO file does not exist.')
+
+    with open('PKG-INFO', 'r') as f:
+        for line in f:
+            if line.startswith('Version: '):
+                return line.split()[1]
+
+    raise CannotDiscoverVersion('Version not found in PKG-INFO.')
 
 
 def get_version(package_name, use_git=True, use_importlib=True, use_pkginfo=True):
@@ -102,37 +105,33 @@ def get_version(package_name, use_git=True, use_importlib=True, use_pkginfo=True
     discovered_version = None
     tried = ''
 
-    # If package_name is a submodule, we need to strip the submodule part
-    s = package_name.split('.')
-    package_name = s[0]
-
     # We need to start with importlib because otherwise all packages will
     # have the version of the current git repository
+
+    # inspect PKG-INFO file (if it exists)
+    if discovered_version is None and use_pkginfo:
+        try:
+            discovered_version = get_version_from_pkginfo()
+        except CannotDiscoverVersion:
+            tried += ', PKG-INFO'
+            discovered_version = None
 
     # git works if we are in the source repository
     if discovered_version is None and use_git:
         try:
-            discovered_version = get_version_from_git(package_name)
+            discovered_version = get_version_from_git()
         except CannotDiscoverVersion:
             tried += ', git'
             discovered_version = None
 
     # importlib is present in Python >= 3.8
-    if discovered_version is None and package_name != 'flit_core' and use_importlib:
+    if discovered_version is None and use_importlib:
         try:
             from importlib.metadata import version
 
             discovered_version = version(package_name)
         except ImportError:
             tried += ', importlib'
-            discovered_version = None
-
-    # pkg-info
-    if discovered_version is None and use_pkginfo:
-        try:
-            discovered_version = get_version_from_pkginfo()
-        except CannotDiscoverVersion:
-            tried += ', PKG-INFO'
             discovered_version = None
 
     # Nope. Out of options.
