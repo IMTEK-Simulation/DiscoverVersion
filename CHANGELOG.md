@@ -1,5 +1,10 @@
 This file lists all changes to the code
 
+v0.1.3
+------
+
+* BUG: Need to ask importlib before git
+
 v0.1.2
 ------
 
