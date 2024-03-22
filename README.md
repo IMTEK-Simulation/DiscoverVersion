@@ -18,7 +18,6 @@ build-backend = "flit_core.buildapi"
 
 [project]
 dynamic = ['version']
-
 dependencies = ['DiscoverVersion']
 ```
 
