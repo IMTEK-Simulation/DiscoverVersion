@@ -29,7 +29,7 @@ Tests the hello world function
 from DiscoverVersion import __version__, get_version
 
 
-_current_version = '0.2.1'
+_current_version = '0.2.2'
 
 
 def test_version_discovery():

@@ -25,6 +25,7 @@
 import os
 import shutil
 import subprocess
+from pathlib import Path
 
 _toplevel_package = __name__.split('.')[0]
 _build_systems = ['flit_core']
@@ -41,10 +42,17 @@ def get_version_from_git(dirname):
     if shutil.which('git') is None:
         raise CannotDiscoverVersion('git executable does not exist.')
 
+    path = Path(os.path.abspath('.'))
+    while path.parent != path and not path.joinpath('.git').is_dir():
+        path = path.parent
+
+    if not path.joinpath('.git').is_dir():
+        raise CannotDiscoverVersion('.git directory does not exist.')
+
     try:
         git_describe = subprocess.run(
             ['git', 'describe', '--tags', '--dirty', '--always'],
-            cwd=dirname,
+            cwd=str(path),
             stdout=subprocess.PIPE)
     except FileNotFoundError:
         git_describe = None
