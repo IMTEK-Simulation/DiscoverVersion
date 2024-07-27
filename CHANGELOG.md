@@ -1,5 +1,10 @@
 This file lists all changes to the code
 
+v0.2.4 (27Jul24)
+----------------
+
+* BUG: Fixed hard-coded version info in tests
+
 v0.2.3 (27Jul24)
 ----------------
 
