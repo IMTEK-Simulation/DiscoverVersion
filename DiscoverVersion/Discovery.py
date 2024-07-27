@@ -42,11 +42,11 @@ def get_version_from_git(dirname):
     if shutil.which('git') is None:
         raise CannotDiscoverVersion('git executable does not exist.')
 
-    path = Path(os.path.abspath('.'))
-    while path.parent != path and not path.joinpath('.git').is_dir():
+    path = Path(os.path.abspath(dirname))
+    while path.parent != path and not path.joinpath('.git').exists():
         path = path.parent
 
-    if not path.joinpath('.git').is_dir():
+    if not path.joinpath('.git').exists():
         raise CannotDiscoverVersion('.git directory does not exist.')
 
     try:
@@ -132,7 +132,11 @@ def get_version(package_name, file_name, use_git=True, use_importlib=True, use_p
     if discovered_version is None and use_git:
         tried += ', git'
         try:
-            discovered_version = get_version_from_git(os.path.dirname(file_name))
+            if os.path.isdir(file_name):
+                dirname = file_name
+            else:
+                dirname = os.path.dirname(file_name)
+            discovered_version = get_version_from_git(dirname)
         except CannotDiscoverVersion:
             discovered_version = None
 

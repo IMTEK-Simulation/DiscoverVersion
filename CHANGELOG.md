@@ -1,5 +1,10 @@
 This file lists all changes to the code
 
+v0.2.3 (27Jul24)
+----------------
+
+* BUG: Fixed version discovery in submodules
+
 v0.2.2 (25Jul24)
 ----------------
 
