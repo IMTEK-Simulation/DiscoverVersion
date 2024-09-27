@@ -1,5 +1,10 @@
 This file lists all changes to the code
 
+v0.2.3 (27Sept24)
+-----------------
+
+* ENH: Add safe.directory '*' when calling git
+
 v0.2.2 (25Jul24)
 ----------------
 
