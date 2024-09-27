@@ -26,17 +26,52 @@
 Tests the hello world function
 """
 
+import os
+import subprocess
+from tempfile import TemporaryDirectory
+
 from DiscoverVersion import __version__, get_version
 
 
-_current_version = '0.2.2'
+_current_version = "0.2.4"
 
 
 def test_version_discovery():
     assert __version__.startswith(_current_version)
 
 
-def test_version_from_submodule():
-    assert get_version('DiscoverVersion', __file__).startswith(_current_version)
+def test_version_from_nested_module():
+    assert get_version("DiscoverVersion", __file__).startswith(_current_version)
 
-    assert get_version('DiscoverVersion', __file__, use_git=False).startswith(_current_version)
+    assert get_version("DiscoverVersion", __file__, use_git=False).startswith(
+        _current_version
+    )
+
+
+def test_version_from_git_submodule():
+    with TemporaryDirectory() as tmpdir:
+        # Create git repository
+        os.mkdir(f"{tmpdir}/my-git-repository")
+        r = subprocess.run(
+            ["git", "init"], cwd=f"{tmpdir}/my-git-repository", stdout=subprocess.PIPE
+        )
+        assert r.returncode == 0
+        # Create and add git submodule
+        assert r.returncode == 0
+        r = subprocess.run(
+            [
+                "git",
+                "submodule",
+                "add",
+                "https://github.com/IMTEK-Simulation/DiscoverVersion.git",
+            ],
+            cwd=f"{tmpdir}/my-git-repository",
+            stdout=subprocess.PIPE,
+        )
+        assert r.returncode == 0
+        assert get_version(
+            "DiscoverVersion",
+            f"{tmpdir}/my-git-repository/DiscoverVersion",
+            use_importlib=False,
+            use_pkginfo=False,
+        ).startswith(_current_version)

@@ -1,9 +1,19 @@
 This file lists all changes to the code
 
-v0.2.3 (27Sept24)
+v0.2.5 (27Sept24)
 -----------------
 
 * ENH: Add safe.directory '*' when calling git
+
+v0.2.4 (27Jul24)
+----------------
+
+* BUG: Fixed hard-coded version info in tests
+
+v0.2.3 (27Jul24)
+----------------
+
+* BUG: Fixed version discovery in submodules
 
 v0.2.2 (25Jul24)
 ----------------
