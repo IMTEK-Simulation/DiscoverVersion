@@ -1,5 +1,10 @@
 This file lists all changes to the code
 
+v0.2.6 (27Sept24)
+-----------------
+
+* TST: Fixed internal version
+
 v0.2.5 (27Sept24)
 -----------------
 
