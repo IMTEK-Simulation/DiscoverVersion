@@ -54,8 +54,7 @@ def get_version_from_git(dirname):
             [
                 "git",
                 "-c",
-                "safe.directory",
-                "*",
+                "safe.directory='*'",
                 "describe",
                 "--tags",
                 "--dirty",
