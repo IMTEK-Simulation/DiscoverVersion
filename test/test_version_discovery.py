@@ -33,7 +33,7 @@ from tempfile import TemporaryDirectory
 from DiscoverVersion import __version__, get_version
 
 
-_current_version = "0.2.6"
+_current_version = "0.3.1"
 
 
 def test_version_discovery():
