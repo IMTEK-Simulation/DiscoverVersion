@@ -1,6 +1,6 @@
 This file lists all changes to the code
 
-v0.2.7 (29Dec24)
+v0.3.0 (29Dec24)
 ----------------
 
 * ENH: Added `DISCOVER_VERSION` environment variable override for CI/CD builds
