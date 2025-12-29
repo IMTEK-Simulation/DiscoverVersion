@@ -1,5 +1,13 @@
 This file lists all changes to the code
 
+v0.2.7 (29Dec24)
+----------------
+
+* ENH: Added `DISCOVER_VERSION` environment variable override for CI/CD builds
+* ENH: Added CLI module (`python -m DiscoverVersion`) for command-line version discovery
+* ENH: Added `discover-version` command-line entry point
+* ENH: Added `write_version_file()` and `write_plain_version_file()` functions for generating version files
+
 v0.2.6 (27Sept24)
 -----------------
 

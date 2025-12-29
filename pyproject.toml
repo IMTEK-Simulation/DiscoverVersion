@@ -30,6 +30,9 @@ pythonpath = [
   "."
 ]
 
+[project.scripts]
+discover-version = "DiscoverVersion.__main__:main"
+
 [project.urls]
 documentation = "https://imtek-simulation.github.io/DiscoverVersion/"
 repository = "https://github.com/imtek-simulation/DiscoverVersion"

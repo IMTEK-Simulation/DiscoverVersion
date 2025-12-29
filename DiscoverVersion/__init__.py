@@ -23,4 +23,13 @@
 #
 
 from .version import __version__
-from .Discovery import get_version
+from .Discovery import (
+    get_version,
+    get_version_from_env,
+    get_version_from_git,
+    get_version_from_pkginfo,
+    write_version_file,
+    write_plain_version_file,
+    CannotDiscoverVersion,
+    VERSION_OVERRIDE_ENV,
+)
