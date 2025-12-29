@@ -28,7 +28,16 @@ jobs:
           source ../venv/bin/activate
           pip install build
 
+      - name: Get version from git tag
+        id: get_version
+        run: |
+          VERSION=$(git describe --tags --always)
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Building version: ${VERSION}"
+
       - name: Build package
+        env:
+          DISCOVER_VERSION: ${{ steps.get_version.outputs.version }}
         run: |
           source ../venv/bin/activate
           python3 -m build . -s

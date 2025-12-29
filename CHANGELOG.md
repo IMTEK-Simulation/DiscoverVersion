@@ -1,5 +1,10 @@
 This file lists all changes to the code
 
+v0.3.1 (29Dec25)
+----------------
+
+* BUG: Fixed CI workflow to use `DISCOVER_VERSION` environment variable when building
+
 v0.3.0 (29Dec25)
 ----------------
 
