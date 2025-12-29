@@ -1,9 +1,10 @@
 This file lists all changes to the code
 
-v0.3.1 (29Dec25)
+v0.3.2 (29Dec25)
 ----------------
 
 * BUG: Fixed CI workflow to use `DISCOVER_VERSION` environment variable when building
+* BUG: Build wheel in addition to sdist (wheel has version baked into metadata)
 
 v0.3.0 (29Dec25)
 ----------------
