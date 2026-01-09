@@ -22,6 +22,19 @@
 # SOFTWARE.
 #
 
-from .discovery import get_version
+try:
+    from .discovery import get_version
+except ImportError:
+    # When flit_core imports this module for metadata extraction,
+    # relative imports fail. Fall back to direct file import.
+    import importlib.util
+    import os
+    _spec = importlib.util.spec_from_file_location(
+        "discovery",
+        os.path.join(os.path.dirname(__file__), "discovery.py")
+    )
+    _discovery = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(_discovery)
+    get_version = _discovery.get_version
 
 __version__ = get_version('DiscoverVersion', __file__)

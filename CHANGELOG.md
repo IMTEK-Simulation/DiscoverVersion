@@ -4,6 +4,7 @@ v0.4.0 (09Jan26)
 ----------------
 
 * ENH: Added meson-python metadata provider for dynamic version discovery with meson-python build backend
+* BUG: Fixed relative import failure during flit_core metadata extraction by adding fallback to file-based import
 * MAINT: Renamed internal module `Discovery.py` to `discovery.py` (PEP 8 compliance)
 * MAINT: Added keywords and improved classifiers in pyproject.toml for better discoverability
 
