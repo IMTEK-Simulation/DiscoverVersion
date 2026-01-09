@@ -10,9 +10,33 @@ license = { file = "LICENSE.md" }
 authors = [
     { name = "Lars Pastewka", email = "lars.pastewka@imtek.uni-freiburg.de" }
 ]
+keywords = [
+    "version",
+    "versioning",
+    "git",
+    "setuptools_scm",
+    "setuptools-scm",
+    "scm",
+    "meson",
+    "meson-python",
+    "flit",
+    "packaging",
+    "build"
+]
 classifiers = [
-    "Development Status :: 2 - Pre-Alpha",
-    "Programming Language :: Python"
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Version Control :: Git"
 ]
 requires-python = ">=3.8.0"
 dynamic = [ "version" ]

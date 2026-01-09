@@ -152,10 +152,7 @@ def get_version(
         tried += ", env"
         discovered_version = get_version_from_env()
 
-    # We need to start with importlib because otherwise all packages will
-    # have the version of the current git repository
-
-    # inspect PKG-INFO file (if it exists)
+    # Inspect PKG-INFO file (if it exists, e.g. in sdist builds)
     if discovered_version is None and use_pkginfo:
         tried += ", PKG-INFO"
         try:
@@ -175,7 +172,8 @@ def get_version(
         except CannotDiscoverVersion:
             discovered_version = None
 
-    # importlib is present in Python >= 3.8
+    # importlib is checked last as a fallback for installed packages.
+    # It is skipped during build isolation (when running under flit_core).
     if (
         discovered_version is None
         and _toplevel_package not in _build_systems

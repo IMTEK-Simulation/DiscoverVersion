@@ -23,7 +23,7 @@
 #
 
 """
-Tests the hello world function
+Tests version discovery functionality.
 """
 
 import os

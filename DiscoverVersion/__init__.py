@@ -23,7 +23,7 @@
 #
 
 from .version import __version__
-from .Discovery import (
+from .discovery import (
     get_version,
     get_version_from_env,
     get_version_from_git,

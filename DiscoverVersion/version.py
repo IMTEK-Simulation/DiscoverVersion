@@ -22,6 +22,6 @@
 # SOFTWARE.
 #
 
-from .Discovery import get_version
+from .discovery import get_version
 
 __version__ = get_version('DiscoverVersion', __file__)

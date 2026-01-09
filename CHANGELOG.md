@@ -1,10 +1,22 @@
 This file lists all changes to the code
 
+v0.4.0 (09Jan26)
+----------------
+
+* ENH: Added meson-python metadata provider for dynamic version discovery with meson-python build backend
+* MAINT: Renamed internal module `Discovery.py` to `discovery.py` (PEP 8 compliance)
+* MAINT: Added keywords and improved classifiers in pyproject.toml for better discoverability
+
 v0.3.2 (29Dec25)
 ----------------
 
 * BUG: Fixed CI workflow to use `DISCOVER_VERSION` environment variable when building
 * BUG: Build wheel in addition to sdist (wheel has version baked into metadata)
+
+v0.3.1 (29Dec25)
+----------------
+
+* MAINT: Updated version to 0.3.1
 
 v0.3.0 (29Dec25)
 ----------------
@@ -54,12 +66,12 @@ v0.1.9 (22Mar24)
 
 * MAINT: Changed discovery order
 
-* v0.1.8 (22Mar24)
+v0.1.8 (22Mar24)
 ----------------
 
 * MAINT: Added discovery via PKG-INFO file
 
-* v0.1.7 (22Mar24)
+v0.1.7 (22Mar24)
 ----------------
 
 * BUG: Use __name__ for package name

@@ -11,11 +11,36 @@ tries the following options to get the version of the package (in order):
 It is intended as a lightweight replacement for
 `setuptools_scm`.
 
-## Usage
+## Usage with meson-python
 
-To use automatic version discovery with your build system of choice
-, here [`flit`](https://flit.pypa.io/), add the following lines to your
+For projects using the `meson-python` build backend, add the following to your
 `pyproject.toml`:
+
+```toml
+[build-system]
+requires = ["meson>=1.0.0", "meson-python>=0.13.0", "ninja", "DiscoverVersion>=0.4.0"]
+build-backend = "mesonpy"
+
+[project]
+dynamic = ["version"]
+dependencies = ["DiscoverVersion"]
+
+[tool.meson-python.metadata]
+version.provider = "DiscoverVersion.meson_python"
+```
+
+Then add the following to your toplevel `__init__.py` for runtime version access:
+
+```python
+from DiscoverVersion import get_version
+
+__version__ = get_version('my_package_name', __file__)
+```
+
+## Usage with flit
+
+For projects using the [`flit`](https://flit.pypa.io/) build backend, add the
+following lines to your `pyproject.toml`:
 
 ```toml
 [build-system]
@@ -29,14 +54,15 @@ dependencies = ['DiscoverVersion']
 
 Then add the following to your toplevel `__init__.py`:
 
-```python3
+```python
 from DiscoverVersion import get_version
 
-__version__ = get_version('my_package_name')
+__version__ = get_version('my_package_name', __file__)
 ```
 
 Note that it is important to hard code the name of your package in the call
-to `get_version`.
+to `get_version`. The `__file__` argument is required for git-based version
+discovery to locate the repository.
 
 ## Environment Variable Override
 
@@ -93,7 +119,10 @@ Here's an example of using DiscoverVersion in a GitHub Actions workflow with
 ## Tests
 
 Before being able to run tests, you need to execute
-```python
-pip install -e .[test] 
+```bash
+pip install -e .[test]
 ```
-to editably install the code.
+to editably install the code. Then run tests with:
+```bash
+pytest
+```

@@ -45,7 +45,7 @@ Examples:
 import argparse
 import sys
 
-from .Discovery import (
+from .discovery import (
     CannotDiscoverVersion,
     get_version_from_env,
     get_version_from_git,
