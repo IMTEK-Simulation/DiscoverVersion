@@ -28,7 +28,7 @@ import subprocess
 from pathlib import Path
 
 _toplevel_package = __name__.split(".")[0]
-_build_systems = ["flit_core"]
+_build_systems = ["flit_core", "scikit_build_core"]
 
 # Environment variable for version override (useful in CI/CD builds)
 VERSION_OVERRIDE_ENV = "DISCOVER_VERSION"
